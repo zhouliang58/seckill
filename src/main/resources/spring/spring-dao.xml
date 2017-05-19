@@ -6,9 +6,11 @@
                            http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
     <!--配置整合mybatis过程
     1.配置数据库相关参数-->
     <context:property-placeholder location="classpath:jdbc.properties"/>
+
 
     <!--2.数据库连接池-->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -46,6 +48,8 @@
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
     </bean>
 
+
+
     <!--４:配置扫描Dao接口包,动态实现DAO接口,注入到spring容器-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--注入SqlSessionFactory-->
@@ -53,4 +57,12 @@
         <!-- 给出需要扫描的Dao接口-->
         <property name="basePackage" value="com.zl.dao"/>
     </bean>
+
+    <!--redisDao-->
+    <bean id="redisDao" class="com.zl.dao.cache.RedisDao">
+        <constructor-arg index="0" value="101.200.43.48"/>
+        <constructor-arg index="1" value="6379"/>
+        <constructor-arg index="2" value="zhouliang"/>
+    </bean>
+
 </beans>
